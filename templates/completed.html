@@ -1,8 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <div id="main" class="container">
-    <h2>Incomplete Items</h2>
-    <p><a href="{{ url_for('new') }}" class="btn btn btn-primary">New Todo</a></p>
+    <h2>Completed Items</h2>
     {{ pagination.info }}
     {{ pagination.links }}
     <table class="table table-hover">
@@ -10,17 +9,18 @@
             <th>#</th>
             <th>Title</th>
             <th>Created at</th>
+            <th>Completed at</th>
             <th>Text</th>
         </tr>
-        {%- for todo in incomplete_items %}
+        {%- for todo in completed_items %}
         <tr class={{"success" if todo.done}}>
             <td>{{todo.Id|format_id}}</td>
-            <td>{{todo.title}}</td>
-            <td>{{todo.pub_date.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td style="text-decoration:line-through">{{todo.title}}</td>
+            <td>{{todo.pub_date.strftime('%Y-%m-%d %H:%M') }}
+            <td>{{todo.complete_date.strftime('%Y-%m-%d %H:%M')}}</td>
             <td>{{todo.text}}</td>
             <td><a href="\delete?id={{todo.Id}}" title="delete">&#10008</a></td>
-            <td><a href="\complete?id={{todo.Id}}" title="complete">&#10004</a></td>
-            <td><a href="\todos?id={{todo.Id}}" title="edit">&#9998</a></td>
+            <td><a href="\incomplete?id={{todo.Id}}" title="incomplete">&#10149</a></td>
             {%- endfor %}
         </tr>
     </table>
