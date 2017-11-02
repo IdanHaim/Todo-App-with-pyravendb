@@ -101,7 +101,6 @@ def incomplete():
 
 @app.route('/todos', methods=['POST'])
 def update():
-    r = request
     id = request.args.get('id')
     with get_store().open_session() as session:
         todo = session.load(id)

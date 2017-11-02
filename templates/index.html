@@ -15,12 +15,13 @@
         {%- for todo in todos %}
         <tr class={{"success" if todo.done}}>
             <td>{{todo.Id}}</td>
-            <td>{{todo.title}}</td>
+            <td style={{"text-decoration:line-through" if todo.done}}>{{todo.title}}</td>
             <td>{{todo.pub_date.strftime('%Y-%m-%d %H:%M') }}</td>
             <td>{{todo.complete_date.strftime('%Y-%m-%d %H:%M') if todo.done}}</td>
-            <td>{{todo.text}}</td>
+            <td>{{todo.text|truncate(60)}}</td>
             <td><a href="\delete?id={{todo.Id}}" title="delete">&#10008</a></td>
-            <td>{% if not todo.done %}
+            <td>
+                {% if not todo.done %}
                 <a href="\complete?id={{todo.Id}}" title="complete">&#10004</a>
                 {% else %}
                 <a href="\incomplete?id={{todo.Id}}" title="incomplete">&#10149</a>
@@ -28,7 +29,7 @@
             </td>
             <td>
                 {% if not todo.done %}
-                <a href="\todos?id={{todo.Id}}" title="edit">&#9998</a>
+                <a href="\todos?id={{todo.Id}}" title="update">&#9998</a>
                 {% endif %}
             </td>
             {%- endfor %}
